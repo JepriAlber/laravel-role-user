@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleUserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('konfigurasi/roles', RoleUserController::class);
+});
+
+
+// Route::controller(RoleUserController::class)->group(function () {
+//     Route::get('/roles', 'index')->middleware('can:read role');
+// });
