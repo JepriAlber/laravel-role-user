@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\RoleDataTable;
+use App\Http\Requests\RolesRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 
@@ -12,14 +15,14 @@ class RoleUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(RoleDataTable $dataTable)
     {
         // untuk cek yang memiliki role staff
         // if ($request->user()->hasRole('staf')) {
         //     return "role page";
         // }
         // $this->authorize('read role');
-        return view('konfigurasi.role');
+        return $dataTable->render('konfigurasi.role');
     }
 
     /**
@@ -29,7 +32,9 @@ class RoleUserController extends Controller
      */
     public function create()
     {
-        //
+        return view('konfigurasi.role-action')->with([
+            'role' => new Role()
+        ]);
     }
 
     /**
@@ -38,9 +43,15 @@ class RoleUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RolesRequest $request)
     {
-        //
+        $data = $request->all();
+        Role::create($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Create data successfully'
+        ]);
     }
 
     /**
@@ -60,9 +71,9 @@ class RoleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        return view('konfigurasi.role-action', compact('role'));
     }
 
     /**
@@ -72,9 +83,16 @@ class RoleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RolesRequest $request, Role $role)
     {
-        //
+        $role->name = $request->name;
+        $role->guard_name = $request->guard_name;
+        $role->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Updated data successfully'
+        ]);
     }
 
     /**
@@ -83,8 +101,12 @@ class RoleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Delete data successfully'
+        ]);
     }
 }

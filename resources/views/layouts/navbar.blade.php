@@ -32,7 +32,9 @@
                 </a>
                 <ul class="sub-menu {{ request()->segment(1) == 'konfigurasi' ? 'expand' : '' }}">
                     @can('read role')
-                    <li><a href="{{ route('roles.index') }}" class="link"><span>Roles</span></a></li>
+                    <li class="{{ request()->segment(1) == 'konfigurasi' && request()->segment(2) == 'roles' ? 'active' : '' }}">
+                        <a href="{{ route('roles.index') }}" class="link"><span>Roles</span></a>
+                    </li>
                     @endcan
                 </ul>
             </li>
