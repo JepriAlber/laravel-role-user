@@ -49,10 +49,11 @@ class UserRolePermissionSeeder extends Seeder
             $role_spv = Role::create(['name' => 'spv']);
             $role_manager = Role::create(['name' => 'manager']);
 
-            $permision = Permission::create(['name' => 'read role']);
-            $permision = Permission::create(['name' => 'create role']);
-            $permision = Permission::create(['name' => 'update role']);
-            $permision = Permission::create(['name' => 'delete role']);
+            $permision = Permission::create(['name' => 'read konfigurasi/roles']);
+            $permision = Permission::create(['name' => 'create konfigurasi/roles']);
+            $permision = Permission::create(['name' => 'update konfigurasi/roles']);
+            $permision = Permission::create(['name' => 'delete konfigurasi/roles']);
+            $permision = Permission::create(['name' => 'read konfigurasi/permissions']);
             $permision = Permission::create(['name' => 'read konfigurasi']);
 
             //set role for user
@@ -61,12 +62,13 @@ class UserRolePermissionSeeder extends Seeder
             $manager->assignRole('manager');
 
             //set permission to role
-            $role_staf->givePermissionTo('read role');
+            $role_staf->givePermissionTo('read konfigurasi');
             $role_manager->givePermissionTo([
-                'read role',
-                'create role',
-                'update role',
-                'delete role',
+                'read konfigurasi/roles',
+                'read konfigurasi/permissions',
+                'create konfigurasi/roles',
+                'update konfigurasi/roles',
+                'delete konfigurasi/roles',
                 'read konfigurasi'
             ]);
 

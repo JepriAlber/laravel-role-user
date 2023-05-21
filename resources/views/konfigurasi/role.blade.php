@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         {{-- jika user memiliki permision create maka tampilkan tombol tambah --}}
-                        @if (request()->user()->can('create role')) 
+                        @if (request()->user()->can('create konfigurasi/roles')) 
                         <button type="button" class="btn mb-2 btn-primary btn-sm btn-add"><i class="ti-plus"> Tambah Data</i></button>
                         @endif
                        {{ $dataTable->table() }}

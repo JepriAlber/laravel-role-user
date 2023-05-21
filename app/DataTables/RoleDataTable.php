@@ -33,11 +33,11 @@ class RoleDataTable extends DataTable
             })
             ->addColumn('action', function ($row) {
                 $action = '';
-                if (Gate::allows('update role')) { // cek apakah user mempunyai permision update maka tampilkan aksinya
+                if (Gate::allows('update konfigurasi/roles')) { // cek apakah user mempunyai permision update maka tampilkan aksinya
                     $action = '<button type="button" data-id="' . $row->id . '" data-jenis="edit" class="btn mb-2 btn-primary btn-sm action"><i class="ti-pencil"></i></button>'; //menambah tombol aksi edit
                 }
 
-                if (Gate::allows('delete role')) { //cek apakah user mempunyai permision delete maka tampilkan aksi delet
+                if (Gate::allows('delete konfigurasi/roles')) { //cek apakah user mempunyai permision delete maka tampilkan aksi delet
                     $action .= '<button type="button" data-id="' . $row->id . '" data-jenis="delete" class="btn mb-2 btn-danger btn-sm action"><i class="ti-trash"></i></button>'; //menambah tombol aksi hapus
                 }
                 return $action;

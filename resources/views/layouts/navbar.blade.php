@@ -24,7 +24,7 @@
                 </a>
             </li>
 
-            @can('read konfigurasi')
+            {{-- @can('read konfigurasi')
             <li class="{{ request()->segment(1) == 'konfigurasi' ? 'active open' : '' }}">
                 <a href="#" class="main-menu has-dropdown">
                     <i class="ti-desktop"></i>
@@ -38,7 +38,30 @@
                     @endcan
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
+            
+                {{-- ambil menu pada dari database menggunakan helper --}}
+                @foreach (getMenus() as $menu)
+                {{-- melakukan permeriksaan permision user apakah ada permesion yang sama dengan url kalau ada munculkan menunya --}}
+                @can('read '.$menu->url)                     
+                <li class="{{ request()->segment(1) == $menu->url ? 'active open' : '' }}">
+                    <a href="#" class="main-menu has-dropdown">
+                        <i class="{{ $menu->icon }}"></i>
+                        <span>{{ $menu->name }}</span>
+                    </a>
+                    <ul class="sub-menu {{ request()->segment(1) == 'konfigurasi' ? 'expand' : '' }}">
+                        @foreach ($menu->subMenus as $submenu)
+                            @can('read '.$submenu->url)
+                                <li class="{{ request()->segment(1) == explode('/',$submenu->url)[0] && request()->segment(2) == explode('/',$submenu->url)[1] ? 'active' : '' }}">
+                                    <a href="{{ url($submenu->url) }}" class="link"><span>{{ $submenu->name }}</span></a>
+                                </li>
+                            @endcan
+                        @endforeach
+                        
+                    </ul>
+                </li>
+                @endcan
+                @endforeach
         </ul>
     </div>
 </nav>  

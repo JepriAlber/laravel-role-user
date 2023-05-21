@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         //memanggil class seeder
-        $this->call([UserRolePermissionSeeder::class]);
+        $this->call([
+            UserRolePermissionSeeder::class,
+            NavigationSeeder::class,
+        ]);
     }
 }
